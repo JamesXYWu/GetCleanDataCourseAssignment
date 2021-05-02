@@ -21,14 +21,11 @@ colnames(activity_labels) <- c("activity","activity_desc")
 colnames(train_activities) <- c("activity")
 train_activities <- inner_join(train_activities,activity_labels,by=c("activity" = "activity")) %>% select(activity_desc)
 ```
-#combine training data with training activities and training subjects
-# training data, training activities, and training subjects have the same observations of 7352, 
-# I'll combine these three data frames together by columns
+#combine training data with training activities and training subjects training data, training activities, and training subjects have the same observations of 7352, need combine these three data frames together by columns
 ```{r}
 train_data <- cbind(train_data,train_subjects,train_activities)
 ```
-# add an experiment group column (name it as experiment_group) and mark this data set's observation as "training" to 
-# tell apart this part of data from testing data when we are going to merge the training data set and the test data set
+# add an experiment group column (name it as experiment_group) and mark this data set's observation as "training" to tell apart this part of data from testing data when we are going to merge the training data set and the test data set
 ```{r}
 train_data <- mutate(train_data,experiment_group="training")
 ```
@@ -45,20 +42,15 @@ colnames(test_subjects)<- c("experiment_subject")
 colnames(test_activities) <- c("activity")
 test_activities <- inner_join(test_activities,activity_labels,by=c("activity" = "activity")) %>% select(activity_desc)
 ```
-#combine testing data with test activity and test subject
-# test data, test activity, and test subject have the same observations of 7352, 
-# we combine these three data frames together by columns
+#combine testing data with test activity and test subject test data, test activity, and test subject have the same observations of 7352, combine these three data frames together by columns
 ```{r}
 test_data <- cbind(test_data,test_subjects,test_activities)
 ```
-# add an experiment group column (named it as exp_group) and mark test_data data set observation as "test" to 
-# tell apart this part of data from training data when we merge the training data set and the test data set
+# add an experiment group column (named it as exp_group) and mark test_data data set observation as "test" to tell apart this part of data from training data when we merge the training data set and the test data set
 ```{r}
 test_data <- mutate(test_data,experiment_group="test")
 ```
-# Both training data and test data have same set of feature measurements and activity, we combine the observations (rows)
-# from these two data set into one data set and name it as experiment_result.
-# write the merged data set to "./merged_dataset.txt"
+# Both training data and test data have same set of feature measurements and activity, we combine the observations (rows) from these two data set into one data set and name it as experiment_result,and write the merged data set to "./merged_dataset.txt"
 ```{r}
 experiment_result <- rbind(train_data,test_data)
 write.table(experiment_result,"./merged_dataset.txt",row.names = FALSE)
